@@ -27,9 +27,8 @@ public static class Cheats
             player.Outline.SetOutlineColor(player.IsEnemy ? Color.red : Color.blue);
         }
     }
-
-    static List<string> spawnedWeapons = new();
     
+    // photon view fixes, let's hope nothing goes over 99997
     static int newWeaponId = 99998;
     static int newMagazineId = 199998;
     
@@ -42,9 +41,6 @@ public static class Cheats
     public static void SpawnWeapon(string weaponName, int magCount = 1)
     {
         Logger.At("LibOnward::Cheats::SpawnWeapon");
-        
-        if (spawnedWeapons.Contains(weaponName))
-            Logger.Except<NotSupportedException>("You cannot spawn in the same weapon twice.");
         
         var weapon = Resources.FindObjectsOfTypeAll<Transform>()
             .FirstOrDefault(x => x.name == "pref_weapon_PC_" + weaponName && x.GetComponent<Weapon>() != null && !x.name.Contains("(Clone)"))?
@@ -71,8 +67,6 @@ public static class Cheats
         
         photonView.enabled = false;
         weapon.SetActive(false);
-        
-        spawnedWeapons.Add(weaponName);
         
         var weaponc = spawnedWeapon.GetComponent<Weapon>();
         weaponc.Init();

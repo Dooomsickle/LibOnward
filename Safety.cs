@@ -65,4 +65,16 @@ internal class Safety
         Logger.Log("warplayer despawned, polling again");
         MelonCoroutines.Start(WaitForLocalPlayer());
     }
+
+    // do the exact same thing as when we despawn
+    internal static void internal_handleLoadoutReset()
+    {
+        Logger.At("LibOnward::Safety::internal_handleLoadoutReset");
+        
+        spawnHandlerInitialized = false;
+        TabletUI.HasInit = false;
+        
+        Logger.Log("loadout reset, polling again");
+        MelonCoroutines.Start(WaitForLocalPlayer());
+    }
 }

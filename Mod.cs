@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using HarmonyLib;
 using Il2Cpp;
 using Il2CppInterop.Runtime.Injection;
 using LibOnward.SpectatorCamera;
@@ -15,6 +17,13 @@ public class Main : MelonMod
     public override void OnInitializeMelon()
     {
         Logger.At("LibOnward::Init");
+        
+        HarmonyInstance.Patch
+        (
+            typeof(Loadout).GetMethod("ResetLoadout"),
+            postfix: new HarmonyMethod(typeof(Safety).GetMethod("internal_handleLoadoutReset",
+                BindingFlags.Static | BindingFlags.NonPublic))
+        );
 
         try
         {
