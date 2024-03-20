@@ -1,0 +1,56 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2024-03-19T20:46:14.0674134"><title>Events | Onward-Docs</title><script type="application/json" id="virtual-toc-data">[{"id":"defining-our-own","level":0,"title":"Defining Our Own","anchor":"#defining-our-own"},{"id":"subscribing-and-unsubscribing-from-il2cpp-events","level":0,"title":"Subscribing and Unsubscribing From IL2CPP Events","anchor":"#subscribing-and-unsubscribing-from-il2cpp-events"}]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.6.6-b224/app.css" rel="stylesheet"><link rel="manifest" href="site.webmanifest"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="Events | Onward-Docs"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="Onward-Docs Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/69/1/events.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="Events | Onward-Docs"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/69/1/events.html#webpage",
+    "url": "writerside-documentation/69/1/events.html",
+    "name": "Events | Onward-Docs",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentation/69/#website",
+    "url": "writerside-documentation/69/",
+    "name": "Onward-Docs Help"
+}</script><!-- End Schema.org --></head><body data-id="Events" data-main-title="Events" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs=""><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Onward-Docs 1 Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Events" id="Events.md">Events</h1><p id="-tg2xna_4925">Events are an incredibly powerful feature of C# that allow us to run code when certain things happen. We can both make our own and subscribe to IL2CPP events.</p><section class="chapter"><h2 id="defining-our-own" data-toc="defining-our-own">Defining Our Own</h2><p id="-tg2xna_4926">We can create an event simply by using the <code class="code" id="-tg2xna_4927">event</code> keyword. You must define it as a delegate.</p><p id="-tg2xna_4928"><span class="control" id="-tg2xna_4929">What are delegates??</span></p><section class="chapter"><h3 id="delegate-types" data-toc="delegate-types">Delegate Types</h3><p id="-tg2xna_4930">Put simply, delegates are wrappers for function invocations. You can give it a function (or list of functions) with the same parameters and return type, and when invoked it will call all of them.</p><p id="-tg2xna_4931">Let's see an example:</p><div class="code-block" data-lang="csharp">
+public class DelegateDemo
+{
+    public delegate int SomeDelegateType(char param);
+ 
+    public int IntMethod(char param)
+    {
+        //whatever
+    }
+ 
+    public void DelegateInvokeTest()
+    {
+        SomeDelegateType ourDelegate = IntMethod;
+        ourDelegate.Invoke();
+    }
+}
+</div><p id="-tg2xna_4933">Delegates allow for both generalization and anonymity of functions.</p><p id="-tg2xna_4934">C# gives us 2 builtin types for delegates: <code class="code" id="-tg2xna_4935">Action&lt;T1, T2, ...&gt;</code> and <code class="code" id="-tg2xna_4936">Func&lt;TReturn, T1, T2, ...&gt;</code>.</p><ul class="list _bullet" id="-tg2xna_4937"><li class="list__item" id="-tg2xna_4938"><p>Actions are wrappers for functions that accept 0 or more arguments and do not return a value. For example, <code class="code" id="-tg2xna_4939">void SomeMethod(int, char)</code> could be represented as <code class="code" id="-tg2xna_4940">Action&lt;int, char&gt;</code>. </p><ul class="list _bullet" id="-tg2xna_4941"><li class="list__item" id="-tg2xna_4942"><p>Methods that don't have any arguments can be represented as a simple <code class="code" id="-tg2xna_4943">Action</code> with no type arguments.</p></li></ul></li><li class="list__item" id="-tg2xna_4944"><p>Funcs are wrappers for functions that accept 0 or more arguments and do return a value. For example, <code class="code" id="-tg2xna_4945">string SomeOtherMetohd(uint, short)</code> could be represented as <code class="code" id="-tg2xna_4946">Func&lt;string, uint, short&gt;</code>. </p><ul class="list _bullet" id="-tg2xna_4947"><li class="list__item" id="-tg2xna_4948"><p>Like Actions, funcs that don't take arguments can be represented as <code class="code" id="-tg2xna_4949">Func&lt;returntype&gt;</code>.</p></li></ul></li></ul><p id="-tg2xna_4950">Both types can be created inline as lambdas:</p><div class="code-block" data-lang="csharp">
+// the arguments of an action are defined between the parentheses
+public Action&lt;string&gt; myAction = (str) =&gt; Console.WriteLine(str);
+public Func&lt;int, long, long&gt; myFunc = (long1, long2) =&gt; (int)(long1 + long2);
+</div><p id="-tg2xna_4952">Anyway, let's get back to actually creating events.</p><div class="code-block" data-lang="csharp">
+public event Action ourEvent;
+</div><p id="-tg2xna_4954">When you create an event, the class in which it is defined has all the power regarding when it's raised. For example, if you define <code class="code" id="-tg2xna_4955">ourEvent</code> in class <code class="code" id="-tg2xna_4956">EventClass</code>, it can call <code class="code" id="-tg2xna_4957">ourEvent?.Invoke();</code>. However, a class <code class="code" id="-tg2xna_4958">NonEventClass</code> cannot call <code class="code" id="-tg2xna_4959">EventClass.ourEvent?.Invoke();</code>.</p><p id="-tg2xna_4960">You can get around this by defining a public method that raises the event:</p><div class="code-block" data-lang="csharp">
+public static void ExternalRaiseEvent() =&gt; ourEvent?.Invoke();
+</div></section><section class="chapter"><h3 id="subscribing-to-events" data-toc="subscribing-to-events">Subscribing To Events</h3><p id="-tg2xna_4962">You need to give the events things to do when they're raised, which can be done with a single operator.</p><div class="code-block" data-lang="csharp">
+Action&lt;string&gt; someAction = (str) =&gt;
+  {
+    // whatever
+  }
+ourEvent += someAction; // adds our action to the event's invocation list
+</div><p id="-tg2xna_4964">Lambdas also work:</p><div class="code-block" data-lang="csharp">
+ourEvent += (str) =&gt; // inline whatever
+</div><p id="-tg2xna_4966">You can unsubscribe from an event by using <code class="code" id="-tg2xna_4967">-=</code> instead of <code class="code" id="-tg2xna_4968">+=</code>:</p><div class="code-block" data-lang="csharp">
+ourEvent -= someAction // someAction will no longer be called
+</div></section></section><section class="chapter"><h2 id="subscribing-and-unsubscribing-from-il2cpp-events" data-toc="subscribing-and-unsubscribing-from-il2cpp-events">Subscribing and Unsubscribing From IL2CPP Events</h2><p id="-tg2xna_4970">While IL2CPP events work the same way, subscribing/unsubscribing from them is a little different.</p><p id="-tg2xna_4971">Classes with events will have the events replaced with <code class="code" id="-tg2xna_4972">add_&lt;eventname&gt;(delegate)</code> and <code class="code" id="-tg2xna_4973">remove_&lt;eventname&gt;(delegate)</code> methods.</p><p id="-tg2xna_4974">Remember how earlier we said that managed types aren't compatible with IL2CPP types? This applies to delegates as well. Luckily, Il2CppInterop gives us a function that allows us to convert.</p><section class="chapter"><h3 id="delegate-conversion-delegatesupport-class" data-toc="delegate-conversion-delegatesupport-class">Delegate Conversion (DelegateSupport class)</h3><p id="-tg2xna_4975">Say we have an event we want to subscribe to:</p><div class="code-block" data-lang="csharp">
+public void add_OnPlayerDied(PlayerEvent arg);
+</div><p id="-tg2xna_4977">We can't pass our own function in raw because <code class="code" id="-tg2xna_4978">PlayerEvent</code> is an IL2CPP delegate type. We need to convert it first:</p><div class="code-block" data-lang="csharp">
+var ourConvertedFunction = DelegateSupport.ConvertDelegate&lt;PlayerEvent&gt;(ourAction);
+</div><p id="-tg2xna_4980">Now we can safely subscribe to the event.</p><div class="code-block" data-lang="csharp">
+add_OnPlayerDied(ourConvertedFunction); // no compiler errors :3
+</div><p id="-tg2xna_4982">The same applies for the <code class="code" id="-tg2xna_4983">remove_</code> methods as well.</p><p id="-tg2xna_4984">We've covered most of the prerequisite knowledge, so let's get into the fun stuff.</p></section></section><div class="last-modified">Last modified: 20 March 2024</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"><a href="harmony.html" class="navigation-links__prev">Harmony</a><a href="basic-object-manipulation.html" class="navigation-links__next">Basic Object Manipulation</a></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.6.6-b224/app.js"></script></body></html>
